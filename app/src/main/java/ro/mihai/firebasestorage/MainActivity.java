@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mButtonTextviewShowUploads.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                openImagesActivity();
             }
         });
     }
@@ -147,5 +147,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No Image!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void openImagesActivity() {
+        Intent intent = new Intent(this, ImagesActivity.class);
+        startActivity(intent);
     }
 }
