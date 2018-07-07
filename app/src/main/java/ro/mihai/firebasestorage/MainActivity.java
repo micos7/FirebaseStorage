@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress_bar);
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").push();
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
                             Upload upload = new Upload(mEditTextFilename.getText().toString().trim(),
                                     taskSnapshot.getStorage().getDownloadUrl().toString());
-                            String uploadId = mDatabaseRef.push().getKey();
+                            Log.i("DEBUG", String.valueOf(upload));
+                            String uploadId = mDatabaseRef.getKey();
+                            Log.i("UPLOADID", uploadId);
                             mDatabaseRef.child(uploadId).setValue(upload);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
